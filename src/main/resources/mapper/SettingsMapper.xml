@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangqi.cms.dao.SettingsMapper">
+
+	<!-- -->
+	<select id="findAllSettings" resultType="settings">
+		select * from cms_settings
+	</select>
+	
+	<!-- 管理员登录 -->
+	<select id="login" resultType="settings">
+		select * from cms_settings where admin_username=#{username} and admin_password = #{password}
+	</select>
+</mapper>

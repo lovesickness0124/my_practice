@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangqi.cms.dao.ChannelMapper">
+
+	<select id="queryAllChannel" resultType="Channel">
+		SELECT
+		*
+		FROM
+		cms_channel
+	</select>
+	
+	<!-- 根据频道模糊查询 -->
+	<select id="queryChannelById" resultType="Article">
+		SELECT
+		a.*,u.username username,c.`name` channelname,g.`name` categoryname
+		FROM
+		cms_article a,
+		cms_channel c,
+		cms_category g,
+		cms_user u
+		WHERE
+		a.category_id = g.id
+		and
+		a.channel_id = c.id
+		and
+		a.user_id = u.id
+		and
+		c.id = #{channel_id}
+	</select>
+</mapper>

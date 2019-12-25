@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangqi.cms.dao.UserMapper">
+
+	<!-- 用户登录 -->
+	<select id="login" resultType="user">
+		select * from cms_user where
+		username = #{username} and password = #{password}
+	</select>
+
+	<!-- 用户注册 -->
+	<insert id="userReg">
+		insert cms_user
+		values(null,#{username},#{password},#{nickname},#{birthday},#{gender},#{locked},now(),#{updated})
+	</insert>
+
+	<!-- 我的文章 -->
+	<select id="myArticle" resultType="Article">
+		SELECT
+		a.*,u.username
+		username,c.`name` channelname,g.`name`
+		categoryname
+		FROM
+		cms_article a,
+		cms_channel c,
+		cms_category g,
+		cms_user u
+		where
+		a.category_id = g.id
+		and
+		a.channel_id = c.id
+		and
+		a.user_id = u.id
+		and
+		a.user_id=1
+	</select>
+</mapper>

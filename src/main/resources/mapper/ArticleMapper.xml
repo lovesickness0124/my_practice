@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangqi.cms.dao.ArticleMapper">
+
+	<select id="queryAllArticle" resultType="Article">
+		SELECT
+		a.*,u.username username,c.`name` channelname,g.`name`
+		categoryname
+		FROM
+		cms_article a,
+		cms_channel c,
+		cms_category g,
+		cms_user u
+		<where>
+			a.category_id = g.id
+			and
+			a.channel_id = c.id
+			and
+			a.user_id = u.id
+			<if test="channel_id != null">
+				and c.id = #{channel_id}
+			</if>
+		</where>
+	</select>
+
+	<!-- queryNewArticle -->
+	<select id="queryNewArticle" resultType="Article">
+		SELECT
+		a.*,u.username username,c.`name` channelname,g.`name`
+		categoryname
+		FROM
+		cms_article a,
+		cms_channel c,
+		cms_category g,
+		cms_user u
+		<where>
+			a.category_id = g.id
+			and
+			a.channel_id = c.id
+			and
+			a.user_id = u.id
+			<if test="channel_id != null">
+				and c.id = #{channel_id}
+			</if>
+		</where>
+		ORDER BY
+		a.updated desc
+	</select>
+
+	<!-- 发布文章 -->
+	<insert id="publishArticle">
+		insert cms_article
+		values(null,#{title},#{summary},#{content},#{picture},0,0,1,0,now(),now(),#{channel_id},#{category_id},#{user_id})
+	</insert>
+</mapper>
